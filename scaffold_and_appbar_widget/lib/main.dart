@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               letterSpacing: 2.0,
               color: Colors.green,
+              fontFamily: 'Sigmar'
             ),
           ),
         ),
@@ -32,10 +33,20 @@ class MyApp extends StatelessWidget {
           onPressed: () {
 
           },
-          child: Text("click"),
           backgroundColor: Colors.red[600],
+          child: const Text("click"),
         ),
       ),
     );
+  }
+}
+
+
+class test extends StatelessWidget {
+  const test({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
