@@ -24,14 +24,25 @@ class MyApp extends StatelessWidget {
             fontSize: 20.0,
               fontWeight: FontWeight.bold,
               letterSpacing: 2.0,
-              color: Colors.green,
+              color: Colors.pink,
               fontFamily: 'Sigmar'
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-
+            showGeneralDialog(
+                context: context,
+                pageBuilder: (context, _, __) =>Center(
+                  child: Container(
+                    height: 620,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+            );
           },
           backgroundColor: Colors.red[600],
           child: const Text("click"),
