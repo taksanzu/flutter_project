@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Flutter For Beginer',
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Hello'),
@@ -18,16 +20,10 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.cyanAccent,
         ),
         body: const Center(
-          child: Text(
-              "Hello Khang",
-            style: TextStyle(
-            fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2.0,
-              color: Colors.pink,
-              fontFamily: 'Sigmar'
-            ),
-          ),
+          child: RiveAnimation.network(
+            'https://cdn.rive.app/animations/vehicles.riv',
+            fit: BoxFit.cover,
+          )
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -36,8 +32,8 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, _, __) =>Center(
                   child: Container(
                     height: 620,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: const BoxDecoration(
                       color: Colors.red,
                     ),
                   ),
