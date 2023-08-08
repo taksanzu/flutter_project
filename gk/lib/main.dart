@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gk/screen2.dart';
 import 'package:gk/screen3.dart';
+import 'package:gk/screen4.dart';
 
 class AnimalsApp extends StatelessWidget {
 
@@ -18,7 +19,7 @@ class AnimalsApp extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16.0),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green[300], textStyle: const TextStyle(fontSize: 25, color: Colors.black)),
+                style: ElevatedButton.styleFrom(minimumSize: Size(200, 100), backgroundColor: Colors.green[300], textStyle: const TextStyle(fontSize: 25, color: Colors.black)),
                 child: const Text('Easy'),
                 onPressed: () async {
                   Navigator.pushNamed(
@@ -36,7 +37,7 @@ class AnimalsApp extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16.0),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.yellowAccent[400], textStyle: const TextStyle(fontSize: 25, color: Colors.black)),
+                style: ElevatedButton.styleFrom(minimumSize: Size(200, 100), backgroundColor: Colors.yellowAccent[400], textStyle: const TextStyle(fontSize: 25, color: Colors.black)),
                 child: const Text('Normal'),
                 onPressed: () async {
                   Navigator.pushNamed(
@@ -54,7 +55,7 @@ class AnimalsApp extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16.0),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red[600], textStyle: const TextStyle(fontSize: 25, color: Colors.black)),
+                style: ElevatedButton.styleFrom(minimumSize: Size(200, 100), backgroundColor: Colors.red[600], textStyle: const TextStyle(fontSize: 25, color: Colors.black)),
                 child: const Text('Hard'),
                 onPressed: () async {
                   Navigator.pushNamed(
@@ -85,6 +86,7 @@ void main() {
           '/screen2': (context) => Screen2(),
           '/main': (context) => AnimalsApp(),
           '/screen3': (context) => Screen3(),
+          '/screen4': (context) => RankingScreen(),
         },
       ));
 }

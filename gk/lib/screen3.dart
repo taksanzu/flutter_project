@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class Screen3 extends StatefulWidget {
@@ -31,6 +33,7 @@ class _Screen3State extends State<Screen3> {
   ];
 
   int score = 0;
+  int animalsType = 0;
   late int totalTime;
   Timer? timer;
   List<String> gridItems = [];
@@ -48,28 +51,52 @@ class _Screen3State extends State<Screen3> {
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       totalTime = arguments?['data2'] as int? ?? 0;
+      animalsType = arguments?['data1'] as int? ?? 0;
       initializeGame();
       initialized = true; // Đặt biến cờ thành true sau khi khởi tạo game
     }
   }
 
   void initializeGame() {
+    // Lấy 4 động vật từ danh sách animals
+    List<String> selectedAnimals = List.from(animals)..shuffle();
+    selectedAnimals = selectedAnimals.take(animalsType).toList();
+    // Sao chép danh sách selectedAnimals 3 lần và gộp thành danh sách gridItems
     gridItems.clear();
+    if(animalsType == 4){
+      for (int i = 0; i < 6; i++) {
+        gridItems.addAll(selectedAnimals);
+      }
+    }else if(animalsType == 6) {
+      for (int i = 0; i < 4; i++) {
+        gridItems.addAll(selectedAnimals);
+      }
+    }else if(animalsType == 12) {
+      for (int i = 0; i < 2; i++) {
+        gridItems.addAll(selectedAnimals);
+      }
+    }
     itemFlipped.clear();
     selectedItemIndices.clear();
-    gridItems.addAll(animals);
-    gridItems.addAll(animals);
     gridItems.shuffle();
+
     for (int i = 0; i < gridItems.length; i++) {
-      itemFlipped.add(false);
+      itemFlipped.add(true); // Lật tất cả các hình
     }
-    startTimer();
-    setState(() {
+
+    // Tạm dừng trong 5 giây trước khi lật lại
+    Future.delayed(const Duration(seconds: 10), () {
+      setState(() {
+        for (int i = 0; i < gridItems.length; i++) {
+          itemFlipped[i] = false; // Lật lại tất cả các hình
+        }
+        startTimer();
+      });
     });
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       setState(() {
         totalTime--;
         if (totalTime <= 0) {
@@ -78,6 +105,12 @@ class _Screen3State extends State<Screen3> {
       });
     });
   }
+  void saveScore(int score, int playTime) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> scoreEntries = prefs.getStringList('scoreEntries') ?? [];
+    scoreEntries.add('$score:$playTime');
+    prefs.setStringList('scoreEntries', scoreEntries);
+  }
 
   void endGame() {
     timer?.cancel();
@@ -85,14 +118,15 @@ class _Screen3State extends State<Screen3> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Game Over"),
+          title: const Text("Game Over"),
           content: Text("Your score: $score"),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                saveScore(score, totalTime);
+                Navigator.pushNamed(context, '/screen4');
               },
-              child: Text("Play Again"),
+              child: const Text("Wacth Score"),
             ),
           ],
         );
@@ -114,10 +148,9 @@ class _Screen3State extends State<Screen3> {
           selectedItemIndices.clear();
         });
         audioPlayer.play(DeviceFileSource('assets/audio/$animalName1.mp3'));
-        // Tạo hàm playAudio() để phát âm thanh
 
       } else {
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 2), () {
           setState(() {
             score -= 5;
             itemFlipped[index1] = false;
@@ -153,7 +186,7 @@ class _Screen3State extends State<Screen3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Memory Game"),
+        title: const Text("Memory Game"),
       ),
       body: Center(
         child: Column(
@@ -167,8 +200,8 @@ class _Screen3State extends State<Screen3> {
               child: LimitedBox(
                 maxHeight: MediaQuery.of(context).size.height * 0.8,
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 8,
                   ),
                   itemCount: gridItems.length,
                   itemBuilder: (context, index) {
@@ -183,7 +216,7 @@ class _Screen3State extends State<Screen3> {
                 onPressed: () {
                   endGame();
                 },
-                child: Text("End Game"),
+                child: const Text("End Game"),
               ),
             ),
           ],
