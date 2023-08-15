@@ -1,5 +1,4 @@
 import 'package:final_term_food_delivery/provider/my_provider.dart';
-import 'package:final_term_food_delivery/screen/details_page.dart';
 import 'package:final_term_food_delivery/screen/home_page.dart';
 import 'package:final_term_food_delivery/screen/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,17 +29,16 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: HomePage() ,
-        // home: StreamBuilder(
-        //   stream: FirebaseAuth.instance.authStateChanges(),
-        //   builder: (index, snapshot) {
-        //     if (snapshot.hasData) {
-        //       return HomePage();
-        //     }
-        //     return WelcomePage();
-        //   },
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (index, snapshot) {
+            if (snapshot.hasData) {
+              return HomePage();
+            }
+            return WelcomePage();
+          },
         // ),
       ),
-    );
+    ));
   }
 }
