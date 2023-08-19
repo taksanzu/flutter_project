@@ -13,6 +13,8 @@ class CartPage extends StatelessWidget {
     required int price,
     required int quantity,
     required VoidCallback onTap,
+    required VoidCallback onAdd,
+    required VoidCallback onSub,
   }) {
     return Row(
       children: [
@@ -37,14 +39,14 @@ class CartPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    "Tên món: $name",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Price",
+                    "Giá: ",
                     style: TextStyle(color: Colors.black),
                   ),
                   Text(
@@ -56,9 +58,35 @@ class CartPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
+                      GestureDetector(
+                        onTap: onAdd,
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                       Text(
                         "$quantity",
                         style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                      GestureDetector(
+                        onTap: onSub,
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Icon(Icons.remove, color: Colors.white),
+                        ),
                       )
                     ],
                   )
@@ -126,6 +154,8 @@ class CartPage extends StatelessWidget {
             name: provider.cartList[index].name,
             price: provider.cartList[index].price,
             quantity: provider.cartList[index].quantity,
+            onAdd: () => provider.increaseQuantity(index),
+            onSub: () => provider.decreaseQuantity(index),
           );
         },
       ),

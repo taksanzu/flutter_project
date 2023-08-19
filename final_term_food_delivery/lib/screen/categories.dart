@@ -1,6 +1,5 @@
 import 'package:final_term_food_delivery/models/food_categories_model.dart';
 import 'package:flutter/material.dart';
-
 import 'details_page.dart';
 import 'home_page.dart';
 import 'wiget/bottom_container.dart';

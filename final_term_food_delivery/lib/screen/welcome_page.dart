@@ -1,10 +1,8 @@
 import 'package:final_term_food_delivery/screen/signup_page.dart';
 import 'package:flutter/material.dart';
-
 import 'login_page.dart';
 
 class WelcomePage extends StatelessWidget {
-  
   Widget button({
   required String name,
   Color? color,
@@ -30,7 +28,6 @@ class WelcomePage extends StatelessWidget {
     ),
   );
 }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

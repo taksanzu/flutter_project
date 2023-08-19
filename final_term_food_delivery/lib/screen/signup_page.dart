@@ -49,13 +49,13 @@ class _SignUpState extends State<SignUp> {
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       Fluttertoast.showToast(
-        msg: "The password provided is too weak.",
+        msg: "Mật khẩu quá yếu",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
     } else if (e.code == 'email-already-in-use') {
       Fluttertoast.showToast(
-        msg: "The account already exists for that email",
+        msg: "Email đã được sử dụng",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
@@ -79,7 +79,7 @@ class _SignUpState extends State<SignUp> {
   if (firstName.text.trim().isEmpty || firstName.text.trim() == null) {
     Future.delayed(Duration(milliseconds: 100), () {
       Fluttertoast.showToast(
-        msg: "firstName is Empty",
+        msg: "Họ không được để trống",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
@@ -90,7 +90,7 @@ class _SignUpState extends State<SignUp> {
   if (lastName.text.trim().isEmpty || lastName.text.trim() == null) {
     Future.delayed(Duration(milliseconds: 100), () {
       Fluttertoast.showToast(
-        msg: "lastName is Empty",
+        msg: "Tên không được để trống",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
@@ -101,7 +101,7 @@ class _SignUpState extends State<SignUp> {
   if (email.text.trim().isEmpty || email.text.trim() == null) {
     Future.delayed(Duration(milliseconds: 100), () {
       Fluttertoast.showToast(
-        msg: "email is Empty",
+        msg: "Email không được để trống",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
@@ -111,7 +111,7 @@ class _SignUpState extends State<SignUp> {
   }else if (!regExp.hasMatch(email.text)) {
     Future.delayed(Duration(milliseconds: 100), () {
       Fluttertoast.showToast(
-        msg: "email is invalid",
+        msg: "Email không hợp lệ",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
@@ -121,7 +121,7 @@ class _SignUpState extends State<SignUp> {
     }else if (password.text.trim().isEmpty || password.text.trim() == null) {
     Future.delayed(Duration(milliseconds: 100), () {
       Fluttertoast.showToast(
-        msg: "password is Empty",
+        msg: "Mật khẩu không được để trống",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
@@ -232,12 +232,27 @@ class _SignUpState extends State<SignUp> {
                   textColor: Colors.white,
                   ontap: () {},
                 ),
-                button(
-                  name: "Register",
-                  color: Colors.redAccent,
-                  textColor: Colors.white,
-                  ontap: validation, // Đã sửa ở đây
-                ),
+            loading
+                ? CircularProgressIndicator()
+                : Container(
+                    height: 60,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.redAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: validation,
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ],

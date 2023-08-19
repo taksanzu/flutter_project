@@ -3,7 +3,6 @@ import 'package:final_term_food_delivery/screen/wiget/text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -35,13 +34,13 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Fluttertoast.showToast(
-          msg: "No user found for that email.",
+          msg: "Không tìm thấy tài khoản.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
         );
       } else if (e.code == 'wrong-password') {
         Fluttertoast.showToast(
-          msg: "Wrong password provided for that user.",
+          msg: "Mật khẩu sai.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
         );
@@ -59,25 +58,25 @@ class _LoginPageState extends State<LoginPage> {
     if ((email.text.trim().isEmpty || email.text.trim() == null) &&
         (password.text.trim().isEmpty || password.text.trim() == null)) {
       Fluttertoast.showToast(
-        msg: "All fields are empty",
+        msg: "Không được để trống email và mật khẩu.",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
     } else if (email.text.trim().isEmpty || email.text.trim() == null) {
       Fluttertoast.showToast(
-        msg: "Email is empty",
+        msg: "Email đang trống.",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
     } else if (!regExp.hasMatch(email.text)) {
       Fluttertoast.showToast(
-        msg: "Please enter a valid Email",
+        msg: "Vui lòng nhập đúng định dạng email.",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
     } else if (password.text.trim().isEmpty || password.text.trim() == null) {
       Fluttertoast.showToast(
-        msg: "Password is empty",
+        msg: "Mật khẩu đang trống.",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );

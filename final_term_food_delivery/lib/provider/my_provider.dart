@@ -151,6 +151,7 @@ class MyProvider extends ChangeNotifier {
           price: data['price'] ?? 0,
         );
         foodList.add(newFood);
+        print('Food List: $foodList');
       }
     } catch (error) {
       print('Error loading food data: $error');
@@ -394,5 +395,20 @@ class MyProvider extends ChangeNotifier {
   void delete(int index) {
     cartList.removeAt(index);
     notifyListeners();
+  }
+
+  void increaseQuantity(int index) {
+    if (index >= 0 && index < cartList.length) {
+      cartList[index].quantity++;
+      notifyListeners();
+    }
+  }
+   void decreaseQuantity(int index) {
+    if (index >= 0 && index < cartList.length) {
+      if (cartList[index].quantity > 1) {
+        cartList[index].quantity--;
+        notifyListeners();
+      }
+    }
   }
 }
